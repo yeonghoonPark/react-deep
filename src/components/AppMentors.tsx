@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { memo, useCallback, useMemo, useReducer } from "react";
 import { Person } from "../models/persons";
 import { ActionsType } from "../actions-type";
 import { personReducer } from "../reducer/personReducer";
@@ -15,25 +15,25 @@ const initialPerson: Person = {
 export default function AppMentors() {
   const [person, dispatch] = useReducer(personReducer, initialPerson);
 
-  const handleUpdate = () => {
+  const handleUpdate = useCallback(() => {
     const oldName = prompt(`누구의 이름을 바꾸고 싶은가요?`);
     const newName = prompt(`이름을 무엇으로 바꾸고 싶은가요?`);
     if (!oldName || !newName) return;
-    dispatch({ type: ActionsType.PERSON_MENTO_UPDATE, oldName, newName });
-  };
+    dispatch({ type: ActionsType.PERSON_MENTOR_UPDATE, oldName, newName });
+  }, []);
 
-  const handleAdd = () => {
+  const handleAdd = useCallback(() => {
     const name = prompt(`추가하실 이름을 입력해주세요`);
     const title = prompt(`추가하실 타이틀을 입력해주세요`);
     if (!name || !title) return;
-    dispatch({ type: ActionsType.PERSON_MENTO_ADD, name, title });
-  };
+    dispatch({ type: ActionsType.PERSON_MENTOR_ADD, name, title });
+  }, []);
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     const name = prompt(`삭제하실 멘토의 이름을 입력해주세요`);
     if (!name) return;
-    dispatch({ type: ActionsType.PERSON_MENTO_DELETE, name });
-  };
+    dispatch({ type: ActionsType.PERSON_MENTOR_DELETE, name });
+  }, []);
 
   return (
     <div>
@@ -48,9 +48,31 @@ export default function AppMentors() {
           </li>
         ))}
       </ul>
-      <button onClick={handleUpdate}>멘토 이름 바꾸기</button>
-      <button onClick={handleAdd}>멘토 추가</button>
-      <button onClick={handleDelete}>멘토 삭제</button>
+      <Button text={"멘토 이름 바꾸기"} onClick={handleUpdate} />
+      <Button text={"멘토 추가하기"} onClick={handleAdd} />
+      <Button text={"멘토 삭제하기"} onClick={handleDelete} />
     </div>
   );
 }
+
+type ButtonProps = {
+  text: string;
+  onClick: () => void;
+};
+
+const Button = memo(({ text, onClick }: ButtonProps) => {
+  console.log("Button");
+  const doSomething = (): string => {
+    for (let i = 0; i < 1000; i++) {
+      console.log("something");
+    }
+    return "?";
+  };
+
+  const something = useMemo(() => doSomething(), []);
+  return (
+    <button onClick={onClick}>
+      {text} {something}
+    </button>
+  );
+});

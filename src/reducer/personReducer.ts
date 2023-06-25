@@ -4,7 +4,7 @@ import { Person } from "../models/persons";
 
 export const personReducer = (person: Person, action: Actions) => {
   switch (action.type) {
-    case ActionsType.PERSON_MENTO_UPDATE: {
+    case ActionsType.PERSON_MENTOR_UPDATE: {
       const { oldName, newName } = action;
       return {
         ...person,
@@ -18,7 +18,7 @@ export const personReducer = (person: Person, action: Actions) => {
       };
     }
 
-    case ActionsType.PERSON_MENTO_ADD: {
+    case ActionsType.PERSON_MENTOR_ADD: {
       const { name, title } = action;
       return {
         ...person,
@@ -26,7 +26,7 @@ export const personReducer = (person: Person, action: Actions) => {
       };
     }
 
-    case ActionsType.PERSON_MENTO_DELETE: {
+    case ActionsType.PERSON_MENTOR_DELETE: {
       const { name } = action;
       return {
         ...person,

@@ -1,19 +1,19 @@
 import { ActionsType } from "./../actions-type/index";
 
 type UpdateAction = {
-  type: ActionsType.PERSON_MENTO_UPDATE;
+  type: ActionsType.PERSON_MENTOR_UPDATE;
   oldName: string;
   newName: string;
 };
 
 type AddAction = {
-  type: ActionsType.PERSON_MENTO_ADD;
+  type: ActionsType.PERSON_MENTOR_ADD;
   name: string;
   title: string;
 };
 
 type DeleteAction = {
-  type: ActionsType.PERSON_MENTO_DELETE;
+  type: ActionsType.PERSON_MENTOR_DELETE;
   name: string;
 };
 
